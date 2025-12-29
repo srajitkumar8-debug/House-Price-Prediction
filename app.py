@@ -23,25 +23,26 @@ all_value = []
 for i in final_X:
   min_value = final_X[i].min()
   max_value = final_X[i].max()
-  result = st.sidebar.slider(f'Select {i} value',)
+  result = st.sidebar.slider(f'Select {i} value',min_value,max_value)
   all_value.append(result)
+
 
 user_X = scaler.transform([all_value])
 
 @st.cache_data
 def ml_model(X,y):
-  model = RandomeForestRegressor()
+  model = RandomForestRegressor()
   model.fit(X,y)
   return model
+
 model = ml_model(scaled_X,y)
 house_price = model.predict(user_X)[0]
 
 final_price = round(house_price * 100000,2)
 
-with st.spinner('Prediction House Price'):
- import time
- time.sleep(2)
+with st.spinner('Predicting House Price'):
+  import time
+  time.sleep(2)
 
-st.success(f'Estimated House Price is : $ {final_price}')
-st.markdown('''**Design and Developed by : Srajit Kumar''')
-
+st.success(f'Estimated House Price is: $ {final_price}')
+st.markdown('''*Design and Developed by: Ankit Mishra*''')
